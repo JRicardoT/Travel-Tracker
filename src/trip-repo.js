@@ -1,6 +1,5 @@
 class TripRepo {
-  constructor(allTripsData) {
-    // console.log(allTripsData)
+  constructor(allTripsData, allDestinations) {
     this.id = allTripsData.id;
     this.userId = allTripsData.userID;
     this.destinationId = allTripsData.destinationID;
@@ -9,6 +8,16 @@ class TripRepo {
     this.duration = allTripsData.duration;
     this.status = allTripsData.status;
     this.suggestedActivities = [];
+    this.destination = allDestinations.find(destination => destination.id === this.destinationId);
+  }
+
+  calculateTripCost() {
+    const lodgingPrice = this.duration * this.destination.estimatedLodgingCostPerDay;
+    const flightCost = this.travelers * this.destination.estimatedFlightCostPerPerson;
+    const PriceBeforeAgentFee = lodgingPrice + flightCost;
+    const agentFee = PriceBeforeAgentFee * .10;
+    const finalCost = PriceBeforeAgentFee - agentFee;
+    return finalCost;
   }
 }
 
