@@ -1,12 +1,13 @@
 import { expect } from 'chai';
 import TripRepo from '../src/Trip-repo';
 import allTripsData from './test-data/trip-test-data';
+import allDestinations from './test-data/trip-destinations-data';
 
 describe('Triprepo', () => {
   let trip;
 
   beforeEach(() => {
-    trip = new TripRepo(allTripsData[0]);
+    trip = new TripRepo(allTripsData[0], allDestinations);
   })
 
   it('should be a function', () => {
@@ -28,18 +29,12 @@ describe('Triprepo', () => {
     expect(trip.suggestedActivities).to.deep.equal([]);
   });
 
-  // it('should calculate the money spent on trips for the year', () => {
-    // {
-    //   "id": 4,
-    //   "userID": 43,
-    //   "destinationID": 14,
-    //   "travelers": 2,
-    //   "date": "2022/02/25",
-    //   "duration": 10,
-    //   "status": "approved",
-    //   "suggestedActivities": []
-    // },
-  //   trip.calcualteTripCost();
-
-  // });
+  it('should have a destination', () => {
+    expect(trip.destination).to.deep.equal(allDestinations[2]);
+  });
+  
+  it('should calculate the cost of the trip', () => {
+    const cost = trip.calculateTripCost();
+    expect(cost).to.equal(4761);
+  });
 });
