@@ -9,3 +9,14 @@ import './images/turing-logo.png'
 
 
 console.log('This is the JavaScript entry file - your code begins here!!');
+
+import { getAllData } from './api-calls';
+
+
+// window.addEventListener('load', initializeData);
+
+// const initializeData = () => {
+  // const randomUserNum = Math.floor(Math.random() * 50);
+  // getAllData()
+  // .then(data => console.log(data));
+// }
