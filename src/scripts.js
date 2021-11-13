@@ -16,7 +16,8 @@ import Traveler from './Traveler';
 // ~~~~~~~~query selectors~~~~~
 let tripCardsContainer = document.getElementById('tripCardsContainer');
 let userGreeting = document.getElementById('userGreeting');
-let totalSpent = document.getElementById('totalSpent')
+let totalSpent = document.getElementById('totalSpent');
+let destinationDropdown = document.getElementById('destinationDropdown');
 
 
 window.addEventListener('load', displayData);
@@ -34,6 +35,8 @@ const intializeData = (data, randomId) => {
   const traveler = new Traveler(data[0][randomId], data[2], data[3]);
   renderTravelerTrips(traveler);
   greetUser(traveler);
+  displayAmountSpentYearly(traveler);
+  addDestinationOptionsToDropdown(data[3])
 }
 
 const renderTravelerTrips = (traveler) => {
@@ -60,5 +63,14 @@ const greetUser = (traveler) => {
   const names = traveler.name.split(' ');
   const firstName = names[0];
   userGreeting.innerText = `Welcome ${firstName}!`;
+}
+
+const displayAmountSpentYearly = (traveler) => {
   totalSpent.innerText = `Total Amount Spent This Year: $${traveler.calculateTotalSpent()}`;
+}
+
+const addDestinationOptionsToDropdown = (destinations) => {
+  destinations.forEach(destination => {
+    destinationDropdown.add(new Option(destination.destination, destination.destination));
+  })
 }
