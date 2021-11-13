@@ -16,8 +16,8 @@ header {
   // @include flex(space-between, center);
   display: flex;
   justify-content: space-between;
-  background-color: rgb(16 95 238 / 95%);
-  color: white;
+  background-color: rgb(122 170 254);
+  color: #3a3b49;
   height: 10vh;
 }
 
@@ -133,4 +133,16 @@ main {
 
 h3 {
   font-size: 20px;
+}
+
+.destination-image {
+  width: 100%;
+  height: 100%;
+}
+
+.trip-info {
+  background-color: #7aaaff;
+  height: 36vh;
+  color: #3a3b49;
+  font-size: 30px
 }
