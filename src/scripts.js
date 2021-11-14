@@ -79,5 +79,59 @@ const displayAmountSpentYearly = (traveler) => {
 const addDestinationOptionsToDropdown = (destinations) => {
   destinations.forEach(destination => {
     destinationDropdown.add(new Option(destination.destination, destination.destination));
-  })
+  });
+}
+
+function checkForm(event) {
+  event.preventDefault();
+  console.log(destinationDropdown.value);
+  console.log(tripDurationIput.value);
+  console.log(numOfTravelersInput.value);
+  console.log(startDateInput.value);
+  if (checkInputValidation()) {
+    console.log('Wassup yo!')
+  }
+}
+
+function checkInputValidation() {
+  if (!destinationDropdown.value || !tripDurationIput.value || !numOfTravelersInput.value || !startDateInput.value) {
+    errorMessage.classList.remove('hidden');
+    setTimeout(() => {
+      hideResponse(errorMessage, userInputForm)
+    }, 2000);
+  } else if (!validateDate()) {
+    errorMessage.innerText = 'Please Pick a Valid Date!'
+    errorMessage.classList.remove('hidden');
+    setTimeout(() => {
+      hideResponse(errorMessage, userInputForm)
+    }, 2000);
+  } else {
+    return true;
+  }
+}
+
+const getTodaydate = () => {
+  const date = new Date().toISOString().slice(0, 10);
+  const listOfDate = date.split('-');
+  const correctionDate = (listOfDate[2] - 1).toString();
+  listOfDate.splice(2, 1, correctionDate);
+  const todayDate = listOfDate.join('/');
+  return todayDate;
+}
+
+const fixInputDate = () => {
+  const initialDate = startDateInput.value.split('-');
+  const correctDate = initialDate.join('/');
+  return correctDate;
+}
+
+const validateDate = () => {
+  const todayDate = getTodaydate();
+  const correctDate = fixInputDate();
+  return correctDate >= todayDate;
+}
+
+const hideResponse = (elem, form) => {
+  elem.classList.add('hidden');
+  form.reset();
 }
