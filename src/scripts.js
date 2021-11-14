@@ -16,22 +16,28 @@ import domUpdates from './dom-updates';
 
 // ~~~~~~~~~ query selectors ~~~~~~~~~~
 let searchButton = document.getElementById('searchButton');
-
+// ~~~~~~~~~ global variables ~~~~~~~~~
+let allData;
+let currentTraveler;
 // ~~~~~~~~~ event listeners ~~~~~~~~~~
 window.addEventListener('load', displayData);
 searchButton.addEventListener('click', checkForm);
 
 function displayData () {
   const randomUserNum = Math.floor(Math.random() * 50);
-  console.log(randomUserNum)
   getAllData()
     .then(data => {
+      allData = data;
+      // console.log(allData);
       intializeData(data, randomUserNum);
     });
 }
 
+// const createTraveler = () 
+
 const intializeData = (data, randomId) => {
   const traveler = new Traveler(data[0][randomId], data[2], data[3]);
+  currentTraveler = traveler;
   domUpdates.renderTravelerTrips(traveler);
   domUpdates.greetUser(traveler);
   domUpdates.displayAmountSpentYearly(traveler);
@@ -40,11 +46,7 @@ const intializeData = (data, randomId) => {
 
 function checkForm(event) {
   event.preventDefault();
-  // console.log(destinationDropdown.value);
-  // console.log(tripDurationIput.value);
-  // console.log(numOfTravelersInput.value);
-  // console.log(startDateInput.value);
   if (domUpdates.checkInputValidation()) {
-    console.log('Wassup yo!')
+    domUpdates.createNewTrip(allData, currentTraveler);
   }
 }
