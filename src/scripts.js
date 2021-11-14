@@ -18,6 +18,12 @@ let tripCardsContainer = document.getElementById('tripCardsContainer');
 let userGreeting = document.getElementById('userGreeting');
 let totalSpent = document.getElementById('totalSpent');
 let destinationDropdown = document.getElementById('destinationDropdown');
+let startDateInput = document.getElementById('startDate');
+let tripDurationIput = document.getElementById('tripDuration');
+let numOfTravelersInput = document.getElementById('numberOfTravelers');
+let errorMessage = document.getElementById('errorMessage');
+let searchButton = document.getElementById('searchButton');
+let userInputForm = document.getElementById('userInputForm');
 
 
 window.addEventListener('load', displayData);
