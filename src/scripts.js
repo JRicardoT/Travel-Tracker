@@ -27,6 +27,7 @@ let userInputForm = document.getElementById('userInputForm');
 
 
 window.addEventListener('load', displayData);
+searchButton.addEventListener('click', checkForm);
 
 function displayData () {
   const randomUserNum = Math.floor(Math.random() * 50);
