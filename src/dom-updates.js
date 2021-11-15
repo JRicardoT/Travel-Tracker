@@ -11,10 +11,14 @@ let tripDurationIput = document.getElementById('tripDuration');
 let numOfTravelersInput = document.getElementById('numberOfTravelers');
 let errorMessage = document.getElementById('errorMessage');
 let userInputForm = document.getElementById('userInputForm');
+let estimatedCost = document.getElementById('estimatedCost');
+let acceptButton = document.getElementById('acceptButton');
+let cancelButton = document.getElementById('cancelButton');
 
 
 let domUpdates = {
   renderTravelerTrips(traveler) {
+    // console.log(traveler.trips)
     tripCardsContainer.innerHTML = '';
     traveler.trips.forEach(trip => {
       tripCardsContainer.innerHTML += `
@@ -101,8 +105,9 @@ let domUpdates = {
   },
 
   createNewTrip(data, traveler) {
+    // console.log(data);
     const destination = this.findDestination(data[3])
-    let newTrip = {
+    let trip = {
       id: data[2].length + 1,
       userID: traveler.id,
       destinationID: destination.id,
@@ -112,7 +117,25 @@ let domUpdates = {
       status: 'pending',
       suggestedActivities: []
     }
-    console.log(newTrip);
+    // console.log(trip.userID);
+    newTrip = new TripRepo(trip, data[3]);
+    this.displayCost(newTrip);
+    // console.log('NEWTRIP:', newTrip.calculateTripCost());
+  },
+
+  displayCost(trip) {
+    estimatedCost.innerText = `Trip Estimated Cost: $${trip.calculateTripCost()}`;
+    this.hideResponse(userInputForm, userInputForm);
+    this.display(estimatedCost);
+    this.display(cancelButton);
+    this.display(acceptButton);
+
+  },
+
+  sendTripRequest(traveler) {
+    console.log(newTrip)
+    postData('http://localhost:3001/api/v1/trips', newTrip);
+    // traveler.trips.push(newTrip);
   },
 
   findDestination(destinations) {
@@ -122,10 +145,18 @@ let domUpdates = {
       })
     }
   },
-
+  
   hideResponse(elem, form) {
     elem.classList.add('hidden');
     form.reset();
+  },
+
+  display(element) {
+    element.classList.remove('hidden');
+  },
+
+  hide(element) {
+    element.classList.add('hidden');
   }
 }
 
