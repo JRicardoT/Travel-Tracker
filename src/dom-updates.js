@@ -1,3 +1,7 @@
+import TripRepo from './Trip-repo';
+import { postData } from './api-calls';
+
+let newTrip;
 let tripCardsContainer = document.getElementById('tripCardsContainer');
 let userGreeting = document.getElementById('userGreeting');
 let totalSpent = document.getElementById('totalSpent');

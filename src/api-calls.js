@@ -31,4 +31,4 @@ const postData = (url, newData) => {
   return postedData;
 }
 
-export { getAllData, postData }
+export { getAllData, postData}
