@@ -61,7 +61,11 @@ function checkForm(event) {
 }
 
 function acceptTripRequest() {
-  domUpdates.sendTripRequest(currentTraveler)
+  domUpdates.sendTripRequest(currentTraveler);
+  domUpdates.renderTravelerTrips(currentTraveler.trips);
+  domUpdates.hide(cancelButton);
+  domUpdates.hide(acceptButton);
+  domUpdates.display(backButton);
 }
 
 function renderForm() {
