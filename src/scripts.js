@@ -12,53 +12,74 @@ console.log('This is the JavaScript entry file - your code begins here!!');
 
 import { getAllData } from './api-calls';
 import Traveler from './Traveler';
+import domUpdates from './dom-updates';
 
-// ~~~~~~~~query selectors~~~~~
-let tripCardsContainer = document.getElementById('tripCardsContainer');
-let userGreeting = document.getElementById('userGreeting');
-let totalSpent = document.getElementById('totalSpent')
-
-
+// ~~~~~~~~~ query selectors ~~~~~~~~~~
+let searchButton = document.getElementById('searchButton');
+let acceptButton = document.getElementById('acceptButton');
+let cancelButton = document.getElementById('cancelButton');
+let estimatedCost = document.getElementById('estimatedCost');
+let userInputForm = document.getElementById('userInputForm');
+let backButton = document.getElementById('backButton');
+let pendingTripsButton = document.getElementById('pendingTripsButton');
+let allTripsButton = document.getElementById('allTripsButton');
+// ~~~~~~~~~ global variables ~~~~~~~~~
+let allData;
+let currentTraveler;
+// ~~~~~~~~~ event listeners ~~~~~~~~~~
 window.addEventListener('load', displayData);
+searchButton.addEventListener('click', checkForm);
+acceptButton.addEventListener('click', acceptTripRequest);
+cancelButton.addEventListener('click', renderForm);
+backButton.addEventListener('click', renderForm);
+pendingTripsButton.addEventListener('click', displayPendingTrips);
+allTripsButton.addEventListener('click', displayAllTrips);
 
 function displayData () {
   const randomUserNum = Math.floor(Math.random() * 50);
-  console.log(randomUserNum)
   getAllData()
     .then(data => {
+      allData = data;
       intializeData(data, randomUserNum);
     });
 }
 
 const intializeData = (data, randomId) => {
   const traveler = new Traveler(data[0][randomId], data[2], data[3]);
-  renderTravelerTrips(traveler);
-  greetUser(traveler);
+  currentTraveler = traveler;
+  domUpdates.renderTravelerTrips(traveler.trips);
+  domUpdates.greetUser(traveler);
+  domUpdates.displayAmountSpentYearly(traveler);
+  domUpdates.addDestinationOptionsToDropdown(data[3])
 }
 
-const renderTravelerTrips = (traveler) => {
-  tripCardsContainer.innerHTML = '';
-  traveler.trips.forEach(trip => {
-    tripCardsContainer.innerHTML += `
-    <article class="trip-card">
-    <section class="destination-image-container">
-      <img class="destination-image"src="${trip.destination.image}" alt="${trip.destination.alt}">
-    </section>
-    <section class="trip-info">
-      <h4>${trip.destination.destination}</h4>
-      <p>Date: ${trip.date}</p>
-      <p>Travelers: ${trip.travelers}</p>
-      <p>Duration: ${trip.duration}</p>
-      <p>Cost: $${trip.calculateTripCost()}</p>
-      <p>Status: ${trip.status}</p>
-    </section>
-  </article>`
-  });
+function checkForm(event) {
+  event.preventDefault();
+  if (domUpdates.checkInputValidation()) {
+    domUpdates.createNewTrip(allData, currentTraveler);
+  }
 }
 
-const greetUser = (traveler) => {
-  const names = traveler.name.split(' ');
-  const firstName = names[0];
-  userGreeting.innerText = `Welcome ${firstName}!`;
-  totalSpent.innerText = `Total Amount Spent This Year: $${traveler.calculateTotalSpent()}`;
+function acceptTripRequest() {
+  domUpdates.sendTripRequest(currentTraveler);
+  domUpdates.renderTravelerTrips(currentTraveler.trips);
+  domUpdates.hide(cancelButton);
+  domUpdates.hide(acceptButton);
+  domUpdates.display(backButton);
+}
+
+function renderForm() {
+  domUpdates.hideResponse(estimatedCost, userInputForm)
+  domUpdates.hide(acceptButton);
+  domUpdates.hide(backButton);
+  domUpdates.hide(cancelButton);
+  domUpdates.display(userInputForm);
+}
+
+function displayPendingTrips() {
+  domUpdates.changeToPendingTrips(currentTraveler);
+}
+
+function displayAllTrips() {
+  domUpdates.renderTravelerTrips(currentTraveler.trips);
 }

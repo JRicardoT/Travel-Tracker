@@ -17,4 +17,18 @@ const getAllData = () => {
   return allPromise;
 }
 
-export { getAllData }
+const postData = (url, newData) => {
+  const postedData = fetch(url, {
+    method: "POST",
+    body: JSON.stringify(newData),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.log(error))
+  return postedData;
+}
+
+export { getAllData, postData}

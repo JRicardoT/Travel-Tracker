@@ -1,14 +1,14 @@
 class TripRepo {
   constructor(allTripsData, allDestinations) {
     this.id = allTripsData.id;
-    this.userId = allTripsData.userID;
-    this.destinationId = allTripsData.destinationID;
+    this.userID = allTripsData.userID;
+    this.destinationID = allTripsData.destinationID;
     this.travelers = allTripsData.travelers;
     this.date = allTripsData.date;
     this.duration = allTripsData.duration;
     this.status = allTripsData.status;
     this.suggestedActivities = [];
-    this.destination = allDestinations.find(destination => destination.id === this.destinationId);
+    this.destination = allDestinations.find(destination => destination.id === this.destinationID);
   }
 
   calculateTripCost() {
