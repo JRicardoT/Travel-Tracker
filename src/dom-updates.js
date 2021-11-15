@@ -14,13 +14,13 @@ let userInputForm = document.getElementById('userInputForm');
 let estimatedCost = document.getElementById('estimatedCost');
 let acceptButton = document.getElementById('acceptButton');
 let cancelButton = document.getElementById('cancelButton');
+let noTripsMessage = document.getElementById('noTripsMessage')
 
 
 let domUpdates = {
-  renderTravelerTrips(traveler) {
-    // console.log(traveler.trips)
+  renderTravelerTrips(trips) {
     tripCardsContainer.innerHTML = '';
-    traveler.trips.forEach(trip => {
+    trips.forEach(trip => {
       tripCardsContainer.innerHTML += `
       <article class="trip-card">
       <section class="destination-image-container">
@@ -105,7 +105,6 @@ let domUpdates = {
   },
 
   createNewTrip(data, traveler) {
-    // console.log(data);
     const destination = this.findDestination(data[3])
     let trip = {
       id: data[2].length + 1,
@@ -117,33 +116,43 @@ let domUpdates = {
       status: 'pending',
       suggestedActivities: []
     }
-    // console.log(trip.userID);
     newTrip = new TripRepo(trip, data[3]);
     this.displayCost(newTrip);
-    // console.log('NEWTRIP:', newTrip.calculateTripCost());
   },
-
-  displayCost(trip) {
-    estimatedCost.innerText = `Trip Estimated Cost: $${trip.calculateTripCost()}`;
-    this.hideResponse(userInputForm, userInputForm);
-    this.display(estimatedCost);
-    this.display(cancelButton);
-    this.display(acceptButton);
-
-  },
-
-  sendTripRequest(traveler) {
-    console.log(newTrip)
-    postData('http://localhost:3001/api/v1/trips', newTrip);
-    // traveler.trips.push(newTrip);
-  },
-
+  
   findDestination(destinations) {
     if (destinationDropdown.value !== '--Destination--') {
       return destinations.find(destination => {
         return destination.destination === destinationDropdown.value;
       })
     }
+  },
+  
+  displayCost(trip) {
+    estimatedCost.innerText = `Trip Estimated Cost: $${trip.calculateTripCost()}`;
+    this.hideResponse(userInputForm, userInputForm);
+    this.display(estimatedCost);
+    this.display(cancelButton);
+    this.display(acceptButton);
+  },
+
+  sendTripRequest(traveler) {
+    postData('http://localhost:3001/api/v1/trips', newTrip);
+    traveler.trips.push(newTrip);
+    estimatedCost.innerText = 'Your Trip Is Being Reviewed. Check Pending Trips.';
+  },
+
+  changeToPendingTrips(traveler) {
+    const pendingTrips = traveler.trips.filter(trip => {
+      return trip.status.includes('pending')
+    });
+    // console.log(pendingTrips)
+    // if (pendingTrips.length) {
+    this.renderTravelerTrips(pendingTrips);
+    // } else {
+    //   this.hide(tripCardsContainer)
+    //   this.display(noTripsMessage);
+    // }
   },
   
   hideResponse(elem, form) {
