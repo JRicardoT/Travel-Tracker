@@ -30,7 +30,6 @@ describe('Triprepo', () => {
   });
 
   it('should have a destination', () => {
-    console.log(allDestinations[2]);
     expect(trip.destination).to.deep.equal(allDestinations[2]);
   });
   
