@@ -23,18 +23,18 @@ let domUpdates = {
     trips.forEach(trip => {
       tripCardsContainer.innerHTML += `
       <article class="trip-card">
-      <section class="destination-image-container">
-        <img class="destination-image"src="${trip.destination.image}" alt="${trip.destination.alt}">
-      </section>
-      <section class="trip-info">
-        <h4>${trip.destination.destination}</h4>
-        <p>Date: ${trip.date}</p>
-        <p>Travelers: ${trip.travelers}</p>
-        <p>Duration: ${trip.duration}</p>
-        <p>Cost: $${trip.calculateTripCost()}</p>
-        <p>Status: ${trip.status}</p>
-      </section>
-    </article>`
+        <section class="destination-image-container">
+          <img class="destination-image"src="${trip.destination.image}" alt="${trip.destination.alt}">
+        </section>
+        <section class="trip-info">
+          <h4>${trip.destination.destination}</h4>
+          <p>Date: ${trip.date}</p>
+          <p>Travelers: ${trip.travelers}</p>
+          <p>Duration: ${trip.duration}</p>
+          <p>Cost: $${this.formatNumber(trip.calculateTripCost())}</p>
+          <p>Status: ${trip.status}</p>
+        </section>
+      </article>`
     });
   },
 
