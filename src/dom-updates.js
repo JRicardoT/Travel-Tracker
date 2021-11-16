@@ -27,12 +27,16 @@ let domUpdates = {
           <img class="destination-image"src="${trip.destination.image}" alt="${trip.destination.alt}">
         </section>
         <section class="trip-info">
-          <h4>${trip.destination.destination}</h4>
-          <p>Date: ${trip.date}</p>
-          <p>Travelers: ${trip.travelers}</p>
-          <p>Duration: ${trip.duration}</p>
-          <p>Cost: $${this.formatNumber(trip.calculateTripCost())}</p>
-          <p>Status: ${trip.status}</p>
+          <div class="trip-destination">
+            <h4>${trip.destination.destination}</h4>
+          </div>
+          <div class="trip-details">
+            <p>Date: ${trip.date}</p>
+            <p>Travelers: ${trip.travelers}</p>
+            <p>Duration: ${trip.duration}</p>
+            <p>Cost: $${this.formatNumber(trip.calculateTripCost())}</p>
+            <p>Status: ${trip.status}</p>
+          </div>
         </section>
       </article>`
     });
@@ -170,6 +174,10 @@ let domUpdates = {
 
   hide(element) {
     element.classList.add('hidden');
+  },
+
+  changeMainView() {
+    tripCardsContainer.classList.add('on-login');
   }
 }
 
