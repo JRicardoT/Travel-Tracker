@@ -23,34 +23,96 @@ let userInputForm = document.getElementById('userInputForm');
 let backButton = document.getElementById('backButton');
 let pendingTripsButton = document.getElementById('pendingTripsButton');
 let allTripsButton = document.getElementById('allTripsButton');
+// ~~~~~~~~~~~~login~~~~~~~~~~
+let loginForm = document.getElementById('loginForm');
+let userNameInput = document.getElementById('userName');
+let passwordInput = document.getElementById('password');
+let loginButton = document.getElementById('loginButton');
+let loginErrorMessage = document.getElementById('loginErrorMessage');
+let loginTitle = document.getElementById('loginTitle');
+let tripInputContainer = document.getElementById('tripInputContainer');
+let tripSelectorContainer = document.getElementById('tripSelectorContainer');
+
 // ~~~~~~~~~ global variables ~~~~~~~~~
 let allData;
 let currentTraveler;
 // ~~~~~~~~~ event listeners ~~~~~~~~~~
-window.addEventListener('load', displayData);
+window.addEventListener('load', getData);
 searchButton.addEventListener('click', checkForm);
 acceptButton.addEventListener('click', acceptTripRequest);
 cancelButton.addEventListener('click', renderForm);
 backButton.addEventListener('click', renderForm);
 pendingTripsButton.addEventListener('click', displayPendingTrips);
 allTripsButton.addEventListener('click', displayAllTrips);
+loginButton.addEventListener('click', checkLoginInfo);
 
-function displayData () {
-  const randomUserNum = Math.floor(Math.random() * 50);
+function checkLoginInfo(event) {
+  event.preventDefault();
+  getData();
+  const id = parseInt(userNameInput.value.slice(8));
+  if (checkLoginInputsAreFilled() && validateUserName() && validatePassword()) {
+    createTraveler(id);
+    domUpdates.hide(loginTitle);
+    domUpdates.hide(loginForm);
+    domUpdates.display(tripInputContainer);
+    domUpdates.display(tripSelectorContainer);
+    intializeData();
+  }
+}
+
+const createTraveler = (id) => {
+  currentTraveler = new Traveler(allData[0][id - 1], allData[2], allData[3]);
+  console.log(currentTraveler)
+}
+
+const checkLoginInputsAreFilled = () => {
+  if (!userNameInput.value || !passwordInput) {
+    loginErrorMessage.innerText = 'Please Fill Out All Sections!';
+    domUpdates.display(loginErrorMessage);
+    setTimeout(() => {
+      domUpdates.hideResponse(loginErrorMessage, loginForm);
+    }, 2000);
+  } else {
+    return true;
+  }
+}
+
+const validateUserName = () => {
+  if (userNameInput.value.length < 9 || userNameInput.value.length > 10 || !userNameInput.value.includes('traveler')) {
+    loginErrorMessage.innerText = 'Invalid Username!';
+    domUpdates.display(loginErrorMessage);
+    setTimeout(() => {
+      domUpdates.hideResponse(loginErrorMessage, loginForm);
+    }, 2000);
+  } else {
+    return true
+  }
+}
+
+const validatePassword = () => {
+  if (passwordInput.value !== 'traveler') {
+    loginErrorMessage.innerText = 'The Password Was Wrong. Please Try Again!';
+    domUpdates.display(loginErrorMessage);
+    setTimeout(() => {
+      domUpdates.hideResponse(loginErrorMessage, loginForm);
+    }, 2000);
+  } else {
+    return true
+  }
+}
+
+function getData () {
   getAllData()
     .then(data => {
       allData = data;
-      intializeData(data, randomUserNum);
     });
 }
 
-const intializeData = (data, randomId) => {
-  const traveler = new Traveler(data[0][randomId], data[2], data[3]);
-  currentTraveler = traveler;
-  domUpdates.renderTravelerTrips(traveler.trips);
-  domUpdates.greetUser(traveler);
-  domUpdates.displayAmountSpentYearly(traveler);
-  domUpdates.addDestinationOptionsToDropdown(data[3])
+const intializeData = () => {
+  domUpdates.renderTravelerTrips(currentTraveler.trips);
+  domUpdates.greetUser(currentTraveler);
+  domUpdates.displayAmountSpentYearly(currentTraveler);
+  domUpdates.addDestinationOptionsToDropdown(allData[3])
 }
 
 function checkForm(event) {
