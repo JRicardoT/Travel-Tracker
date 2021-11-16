@@ -14,7 +14,7 @@ let userInputForm = document.getElementById('userInputForm');
 let estimatedCost = document.getElementById('estimatedCost');
 let acceptButton = document.getElementById('acceptButton');
 let cancelButton = document.getElementById('cancelButton');
-let noTripsMessage = document.getElementById('noTripsMessage')
+
 
 
 let domUpdates = {
