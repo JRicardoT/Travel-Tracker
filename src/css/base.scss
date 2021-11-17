@@ -96,11 +96,16 @@ select {
   font-size: 100%;
 }
 
- .on-login {
-  display: grid;
-  place-items: center;
-  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-  grid-gap: 20px;
+.on-login {
+  // display: grid;
+  // place-items: center;
+  // grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+  // grid-gap: 20px;
+  @include flex(center, flex-start);
+  // display: flex;
+  flex-wrap: wrap;
+  // flex-direction: row;
+  // justify-content: center;
   background-color: $mainColor;
   height: 100%;
   width: 100%;
@@ -116,7 +121,7 @@ main {
 
 .trip-card {
   height: 60vh;
-  width: 100%;
+  width: 500px;
   border-radius: $roundCorners;
   box-shadow: $shadow;
 }
@@ -207,4 +212,9 @@ h3,
 
 .login-title {
   margin-top: 20px;
+}
+
+.error-message {
+  font-size: 36px;
+  margin: 40px;
 }

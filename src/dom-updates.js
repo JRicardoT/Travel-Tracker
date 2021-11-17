@@ -2,19 +2,18 @@ import TripRepo from './Trip-repo';
 import { postData } from './api-calls';
 
 let newTrip;
-let tripCardsContainer = document.getElementById('tripCardsContainer');
-let userGreeting = document.getElementById('userGreeting');
-let totalSpent = document.getElementById('totalSpent');
-let destinationDropdown = document.getElementById('destinationDropdown');
-let startDateInput = document.getElementById('startDate');
-let tripDurationIput = document.getElementById('tripDuration');
-let numOfTravelersInput = document.getElementById('numberOfTravelers');
-let errorMessage = document.getElementById('errorMessage');
-let userInputForm = document.getElementById('userInputForm');
-let estimatedCost = document.getElementById('estimatedCost');
-let acceptButton = document.getElementById('acceptButton');
-let cancelButton = document.getElementById('cancelButton');
-let noTripsMessage = document.getElementById('noTripsMessage')
+const tripCardsContainer = document.getElementById('tripCardsContainer');
+const userGreeting = document.getElementById('userGreeting');
+const totalSpent = document.getElementById('totalSpent');
+const destinationDropdown = document.getElementById('destinationDropdown');
+const startDateInput = document.getElementById('startDate');
+const tripDurationIput = document.getElementById('tripDuration');
+const numOfTravelersInput = document.getElementById('numberOfTravelers');
+const errorMessage = document.getElementById('errorMessage');
+const userInputForm = document.getElementById('userInputForm');
+const estimatedCost = document.getElementById('estimatedCost');
+const acceptButton = document.getElementById('acceptButton');
+const cancelButton = document.getElementById('cancelButton');
 
 
 let domUpdates = {
@@ -150,13 +149,7 @@ let domUpdates = {
     const pendingTrips = traveler.trips.filter(trip => {
       return trip.status.includes('pending')
     });
-    // console.log(pendingTrips)
-    // if (pendingTrips.length) {
     this.renderTravelerTrips(pendingTrips);
-    // } else {
-    //   this.hide(tripCardsContainer)
-    //   this.display(noTripsMessage);
-    // }
   },
 
   changeToApprovedTrips(trips) {
