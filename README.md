@@ -30,11 +30,13 @@ The goals of this project were to:
 ### Visual of Functionality:
 
 #### Desktop Dashboard
-<img src="" alt="Desktop Dashboard" width="400"/>
+![2021-11-16 20 52 51](https://user-images.githubusercontent.com/86930028/142131814-3c6ddd44-d1a5-42b1-8962-0341adb0d437.gif)
+
+![2021-11-16 20 53 33](https://user-images.githubusercontent.com/86930028/142131916-83a144ed-5969-4d9e-8466-4861c258422d.gif)
 
 
 #### Responsive Dashboard
-<img src="" alt="Responsive Dashboard" width="400"/>
+![2021-11-16 20 54 15](https://user-images.githubusercontent.com/86930028/142131963-e4aebb57-1f5b-4a8e-86c9-1d74bdda40aa.gif)
 
 
 ### Challenges
