@@ -14,34 +14,27 @@ import { getAllData } from './api-calls';
 import Traveler from './Traveler';
 import domUpdates from './dom-updates';
 
-let searchButton = document.getElementById('searchButton');
-let acceptButton = document.getElementById('acceptButton');
-let cancelButton = document.getElementById('cancelButton');
-let estimatedCost = document.getElementById('estimatedCost');
-let userInputForm = document.getElementById('userInputForm');
-let backButton = document.getElementById('backButton');
-let pendingTripsButton = document.getElementById('pendingTripsButton');
-let allTripsButton = document.getElementById('allTripsButton');
-let loginForm = document.getElementById('loginForm');
-let userNameInput = document.getElementById('userName');
-let passwordInput = document.getElementById('password');
-let loginButton = document.getElementById('loginButton');
-let loginErrorMessage = document.getElementById('loginErrorMessage');
-let loginTitle = document.getElementById('loginTitle');
-let tripInputContainer = document.getElementById('tripInputContainer');
-let tripSelectorContainer = document.getElementById('tripSelectorContainer');
+const searchButton = document.getElementById('searchButton');
+const acceptButton = document.getElementById('acceptButton');
+const cancelButton = document.getElementById('cancelButton');
+const estimatedCost = document.getElementById('estimatedCost');
+const userInputForm = document.getElementById('userInputForm');
+const backButton = document.getElementById('backButton');
+const pendingTripsButton = document.getElementById('pendingTripsButton');
+const allTripsButton = document.getElementById('allTripsButton');
+const loginForm = document.getElementById('loginForm');
+const userNameInput = document.getElementById('userName');
+const passwordInput = document.getElementById('password');
+const loginButton = document.getElementById('loginButton');
+const loginErrorMessage = document.getElementById('loginErrorMessage');
+const loginTitle = document.getElementById('loginTitle');
+const tripInputContainer = document.getElementById('tripInputContainer');
+const tripSelectorContainer = document.getElementById('tripSelectorContainer');
 
 let allData;
 let currentTraveler;
-searchButton.addEventListener('click', checkForm);
-acceptButton.addEventListener('click', acceptTripRequest);
-cancelButton.addEventListener('click', renderForm);
-backButton.addEventListener('click', renderForm);
-pendingTripsButton.addEventListener('click', displayPendingTrips);
-allTripsButton.addEventListener('click', displayAllTrips);
-loginButton.addEventListener('click', checkLoginInfo);
 
-function checkLoginInfo(event) {
+const checkLoginInfo = (event) => {
   event.preventDefault();
   getData();
   const id = parseInt(userNameInput.value.slice(8));
@@ -96,7 +89,7 @@ const validatePassword = () => {
   }
 }
 
-function getData () {
+const getData = () => {
   getAllData()
     .then(data => {
       allData = data;
@@ -110,21 +103,21 @@ const intializeData = () => {
   domUpdates.addDestinationOptionsToDropdown(allData[3]);
 }
 
-function checkForm(event) {
+const checkForm = (event) => {
   event.preventDefault();
   if (domUpdates.checkInputValidation()) {
     domUpdates.createNewTrip(allData, currentTraveler);
   }
 }
 
-function acceptTripRequest() {
+const acceptTripRequest = () => {
   domUpdates.sendTripRequest(currentTraveler);
   domUpdates.hide(cancelButton);
   domUpdates.hide(acceptButton);
   domUpdates.display(backButton);
 }
 
-function renderForm() {
+const renderForm = () => {
   domUpdates.hideResponse(estimatedCost, userInputForm);
   domUpdates.hide(acceptButton);
   domUpdates.hide(backButton);
@@ -132,10 +125,19 @@ function renderForm() {
   domUpdates.display(userInputForm);
 }
 
-function displayPendingTrips() {
+const displayPendingTrips = () => {
   domUpdates.changeToPendingTrips(currentTraveler);
 }
 
-function displayAllTrips() {
+const displayAllTrips = () => {
   domUpdates.changeToApprovedTrips(currentTraveler.trips);
 }
+
+window.addEventListener('load', getData);
+searchButton.addEventListener('click', checkForm);
+acceptButton.addEventListener('click', acceptTripRequest);
+cancelButton.addEventListener('click', renderForm);
+backButton.addEventListener('click', renderForm);
+pendingTripsButton.addEventListener('click', displayPendingTrips);
+allTripsButton.addEventListener('click', displayAllTrips);
+loginButton.addEventListener('click', checkLoginInfo);
