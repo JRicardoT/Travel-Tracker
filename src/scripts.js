@@ -14,7 +14,6 @@ import { getAllData } from './api-calls';
 import Traveler from './Traveler';
 import domUpdates from './dom-updates';
 
-// ~~~~~~~~~ query selectors ~~~~~~~~~~
 let searchButton = document.getElementById('searchButton');
 let acceptButton = document.getElementById('acceptButton');
 let cancelButton = document.getElementById('cancelButton');
@@ -23,7 +22,6 @@ let userInputForm = document.getElementById('userInputForm');
 let backButton = document.getElementById('backButton');
 let pendingTripsButton = document.getElementById('pendingTripsButton');
 let allTripsButton = document.getElementById('allTripsButton');
-// ~~~~~~~~~~~~login~~~~~~~~~~
 let loginForm = document.getElementById('loginForm');
 let userNameInput = document.getElementById('userName');
 let passwordInput = document.getElementById('password');
@@ -33,11 +31,8 @@ let loginTitle = document.getElementById('loginTitle');
 let tripInputContainer = document.getElementById('tripInputContainer');
 let tripSelectorContainer = document.getElementById('tripSelectorContainer');
 
-// ~~~~~~~~~ global variables ~~~~~~~~~
 let allData;
 let currentTraveler;
-// ~~~~~~~~~ event listeners ~~~~~~~~~~
-window.addEventListener('load', getData);
 searchButton.addEventListener('click', checkForm);
 acceptButton.addEventListener('click', acceptTripRequest);
 cancelButton.addEventListener('click', renderForm);
@@ -63,7 +58,6 @@ function checkLoginInfo(event) {
 
 const createTraveler = (id) => {
   currentTraveler = new Traveler(allData[0][id - 1], allData[2], allData[3]);
-  console.log(currentTraveler)
 }
 
 const checkLoginInputsAreFilled = () => {
@@ -86,7 +80,7 @@ const validateUserName = () => {
       domUpdates.hideResponse(loginErrorMessage, loginForm);
     }, 2000);
   } else {
-    return true
+    return true;
   }
 }
 
@@ -98,7 +92,7 @@ const validatePassword = () => {
       domUpdates.hideResponse(loginErrorMessage, loginForm);
     }, 2000);
   } else {
-    return true
+    return true;
   }
 }
 
@@ -110,10 +104,10 @@ function getData () {
 }
 
 const intializeData = () => {
-  domUpdates.renderTravelerTrips(currentTraveler.trips);
+  displayAllTrips();
   domUpdates.greetUser(currentTraveler);
   domUpdates.displayAmountSpentYearly(currentTraveler);
-  domUpdates.addDestinationOptionsToDropdown(allData[3])
+  domUpdates.addDestinationOptionsToDropdown(allData[3]);
 }
 
 function checkForm(event) {
@@ -125,14 +119,13 @@ function checkForm(event) {
 
 function acceptTripRequest() {
   domUpdates.sendTripRequest(currentTraveler);
-  domUpdates.renderTravelerTrips(currentTraveler.trips);
   domUpdates.hide(cancelButton);
   domUpdates.hide(acceptButton);
   domUpdates.display(backButton);
 }
 
 function renderForm() {
-  domUpdates.hideResponse(estimatedCost, userInputForm)
+  domUpdates.hideResponse(estimatedCost, userInputForm);
   domUpdates.hide(acceptButton);
   domUpdates.hide(backButton);
   domUpdates.hide(cancelButton);
@@ -144,5 +137,5 @@ function displayPendingTrips() {
 }
 
 function displayAllTrips() {
-  domUpdates.renderTravelerTrips(currentTraveler.trips);
+  domUpdates.changeToApprovedTrips(currentTraveler.trips);
 }
