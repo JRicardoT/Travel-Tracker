@@ -29,7 +29,6 @@ class Traveler {
       return total += trip.calculateTripCost();
     }, 0);
     return totalSpentInYear;
-    // .toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
   }
 }
 

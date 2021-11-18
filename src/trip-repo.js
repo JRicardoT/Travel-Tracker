@@ -12,12 +12,20 @@ class TripRepo {
   }
 
   calculateTripCost() {
-    const lodgingPrice = this.duration * this.destination.estimatedLodgingCostPerDay;
-    const flightCost = this.travelers * this.destination.estimatedFlightCostPerPerson;
+    const lodgingPrice = this.calculateLodgingPrice();
+    const flightCost = this.calculateFlightCost();
     const PriceBeforeAgentFee = lodgingPrice + flightCost;
     const agentFee = PriceBeforeAgentFee * .10;
     const finalCost = PriceBeforeAgentFee - agentFee;
     return finalCost;
+  }
+
+  calculateLodgingPrice() {
+    return this.duration * this.destination.estimatedLodgingCostPerDay;
+  }
+
+  calculateFlightCost() {
+    return this.travelers * this.destination.estimatedFlightCostPerPerson;
   }
 }
 
