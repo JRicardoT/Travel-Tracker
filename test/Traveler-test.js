@@ -25,12 +25,21 @@ describe('Traveler', () => {
     expect(traveler.type).to.equal('shopper');
   });
 
+  it('should have a number for the id', () => {
+    expect(traveler.id).to.be.a('number');
+  });
+
+  it('should store the name and the type as a string', () => {
+    expect(traveler.name).to.be.a('string');
+    expect(traveler.type).to.be.a('string');
+  });
+
   it('should store all traveler\'s trips', () => {
     expect(traveler.trips).to.deep.equal([
       {
         id: 3,
-        userId: 3,
-        destinationId: 22,
+        userID: 3,
+        destinationID: 22,
         travelers: 4,
         date: '2021/05/22',
         duration: 17,
@@ -47,7 +56,7 @@ describe('Traveler', () => {
       },
       {
         id: 41,
-        userId: 3,
+        userID: 3,
         destinationId: 25,
         travelers: 3,
         date: '2021/08/30',
